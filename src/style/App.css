@@ -1,0 +1,259 @@
+/* =========================
+   Variables y base
+========================= */
+:root{
+  --bg-start: #070e1e;
+  --bg-end:   #0b1224;
+  --text:     #e9eef6;
+  --muted:    #b7c0d4;
+  --border:   rgba(255,255,255,.10);
+  --card-bg:  rgba(255,255,255,.05);
+  --card-bg-strong: rgba(255,255,255,.07);
+  --shadow:   0 6px 24px rgba(0,0,0,.35);
+  --chip-bg:  rgba(255,255,255,.08);
+  --chip-active: #e24b41;
+
+  --radius-xl: 14px;
+  --radius-lg: 12px;
+  --radius-md: 10px;
+
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 20px;
+  --space-5: 28px;
+
+  --title-size: 28px;
+  --text-size: 15px;
+}
+
+*{ box-sizing:border-box; }
+html, body, #root{
+  background: radial-gradient(1200px 800px at 20% -10%, #111b35 0%, transparent 60%),
+              linear-gradient(180deg, #070e1e 0%, #0b1224 100%) !important;
+}
+
+.page{
+  background: transparent !important;
+  color: #e9eef6;
+}
+
+/* Por si algún reset te dejó el texto gris */
+.title, .chip, .extension-title, .extension-desc, .remove-btn{
+  color: inherit !important;
+}
+/* =========================
+   Toolbar (título + filtros)
+========================= */
+.toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding-block: var(--space-2);
+}
+
+.title{
+  margin:0;
+  font-size: var(--title-size);
+  font-weight: 800;
+  letter-spacing:.2px;
+  line-height:1.1;
+  text-shadow: 0 1px 0 rgba(0,0,0,.25);
+}
+
+.filters{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--chip-bg);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 14px;
+  line-height:1;
+  cursor:pointer;
+  transition: transform .06s ease, background .2s ease, border-color .2s ease;
+}
+.chip:hover{ transform: translateY(-1px); background: var(--card-bg-strong); }
+.chip--all{ background: var(--chip-active); border-color: transparent; }
+
+/* =========================
+   Grilla de tarjetas
+========================= */
+.extensions-list{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.extension-card{
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-3);
+  box-shadow: var(--shadow);
+  transition: transform .08s ease, background .2s ease, border-color .2s ease;
+}
+.extension-card:hover{
+  transform: translateY(-2px);
+  background: var(--card-bg-strong);
+  border-color: rgba(255,255,255,.14);
+}
+
+.extension-head{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.badge{
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);
+}
+
+.extension-title{
+  margin:0;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.extension-desc{
+  margin: 8px 0 14px;
+  color: var(--muted);
+  font-size: var(--text-size);
+  line-height: 1.45;
+}
+
+.extension-actions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: var(--space-2);
+}
+
+/* Botón Remove */
+.remove-btn{
+  height: 34px;
+  padding: 0 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease, transform .06s ease;
+}
+.remove-btn:hover{ background: rgba(255,255,255,.10); }
+.remove-btn:active{ transform: translateY(1px); }
+
+/* Switch */
+.swich{ position:relative; display:inline-block; width: 48px; height: 24px; }
+.swich input{ opacity:0; width:0; height:0; }
+.slider{
+  position:absolute; inset:0;
+  border-radius: 999px;
+  background: rgba(255,255,255,.28);
+  transition: background .18s ease;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.25);
+}
+.slider:before{
+  content:"";
+  position:absolute;
+  width: 18px; height: 18px;
+  left: 3px; top: 3px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.35);
+  transition: transform .18s ease;
+}
+.swich input:checked + .slider{ background: #ff6257; }
+.swich input:checked + .slider:before{ transform: translateX(24px); }
+
+/* =========================
+   Utilidades opcionales
+========================= */
+.container{
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-3);
+}
+
+/* =========================
+   Responsive
+========================= */
+
+/* ≤ 1200px: espaciar un poco menos */
+@media (max-width: 1200px){
+  .page{ max-width: 1000px; }
+  .extensions-list{ gap: 14px; }
+}
+
+/* ≤ 1024px: 3→2 columnas */
+@media (max-width: 1024px){
+  .extensions-list{
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .title{ font-size: 26px; }
+}
+
+/* ≤ 768px: ajustar paddings y alturas */
+@media (max-width: 768px){
+  :root{
+    --title-size: 24px;
+    --text-size: 14px;
+  }
+
+  .toolbar{ gap: var(--space-2); }
+  .filters{ gap: 8px; }
+  .chip{
+    height: 34px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+
+  .extension-card{ padding: 14px; }
+  .remove-btn{ height: 32px; padding: 0 12px; }
+}
+
+/* ≤ 560px: 2→1 columna y stack limpio */
+@media (max-width: 560px){
+  .extensions-list{
+    grid-template-columns: 1fr;
+  }
+  .toolbar{
+    align-items: flex-start;
+  }
+  .filters{
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+}
+
+/* ≤ 400px: chips más pequeños, tipografía ajustada */
+@media (max-width: 400px){
+  .chip{
+    height: 30px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+  .extension-title{ font-size: 17px; }
+  .badge{ width:28px; height:28px; border-radius: 8px; }
+}
