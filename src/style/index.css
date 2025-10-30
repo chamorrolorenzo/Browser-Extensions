@@ -35,7 +35,7 @@ html, body {
   padding: 24px;
 }
 
-/* ====== HEADER ====== */
+
 /* ===== HEADER ===== */
 .header {
   display: flex;
@@ -44,30 +44,24 @@ html, body {
   background: hsl(226, 25%, 15%);
   border-radius: 14px;
   padding: 10px 18px;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
 }
 
-/* logo + texto juntos */
-.logo-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 
-.logo-img {
+.logo {
   width: 26px;
   height: 26px;
 }
 
-.logo {
+.logo-text{
   color: white;
   font-weight: 600;
   opacity: 0.9;
+  margin-left: -120px;
  }
-
 
 /* botón de configuración */
 .settings-btn {
+  margin-left: auto;
   background: transparent;
   border-radius: 10px;
   color: white;
@@ -105,10 +99,15 @@ html, body {
   border-color: var(--neutral-600);
 }
 
-.filter.active {
+.filter-active {
   background: var(--red-500);
   border-color: var(--red-500);
   color: white;
+  border-radius: 999px;
+  padding: 6px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
 }
 
 /* ====== LISTA DE EXTENSIONES ====== */
@@ -120,39 +119,46 @@ html, body {
 
 /* ====== TARJETA DE EXTENSIÓN ====== */
 .extension-card {
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background: white;
   border: 1px solid var(--neutral-200);
   border-radius: var(--radius-xl);
   padding: 16px;
   box-shadow: var(--shadow-md);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  height: 150px;
+  width: 300px;
+ }
+
+.img-logo{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;             
 }
 
-.devlens{
-  width: 40px;
-  height: 40px;
-  display: block;
+/* El logo */
+.img-logo img{
+  width: 60px;
+  height:60px;
+ }
 
+/* Bloque de textos a la derecha del logo */
+.title-text{
+  display:flex;
+  flex-direction:column;  
 }
 
-.extension-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 8px 0;
-  font-weight: 700;
-  font-size: 1.05rem;
+/* Título y párrafo */
+.extension-title{
+  margin:0;
+  font-weight:700;
 }
-
-.extension-desc {
-  margin: 0 0 16px 0;
-  color: var(--neutral-600);
-  font-size: 0.9rem;
-}
-
+.extension-desc{
+ font-size: 14px;
+  margin:8px 0 0;
+  line-height:1.30; 
+ }
 /* ====== ACCIONES (Remove + Switch) ====== */
 .extension-actions {
   display: flex;
@@ -165,7 +171,7 @@ html, body {
   color: white;
   border: none;
   border-radius: 999px;
-  padding: 6px 14px;
+  padding: 10px 14px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
@@ -179,14 +185,8 @@ html, body {
 .switch {
   position: relative;
   display: inline-block;
-  width: 46px;
+  width: 42px;
   height: 24px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
 }
 
 .slider {
@@ -197,12 +197,14 @@ html, body {
   border-radius: 34px;
   cursor: pointer;
   transition: 0.3s;
+  height: 20px;
+  
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 18px; width: 18px;
+  height: 15px; width: 15px;
   left: 3px; bottom: 3px;
   background-color: white;
   border-radius: 50%;
@@ -211,10 +213,11 @@ html, body {
 
 input:checked + .slider {
   background-color: var(--red-500);
+  width: 35px;
 }
 
 input:checked + .slider:before {
-  transform: translateX(22px);
+  transform: translateX(15px);
 }
 
 /* ====== MODO OSCURO ====== */

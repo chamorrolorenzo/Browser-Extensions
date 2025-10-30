@@ -8,9 +8,8 @@ export default function App() {
     <div className="app-container">
       {/* Encabezado principal con el buscador y el ícono de configuración */}
       <header className="header">
-        <div className="logo-box"></div>
-        <img src={logo} alt="Extension-logo" />
-        <h1 className="logo">Extensions</h1>
+        <img src={logo} alt="logo" />
+        <h1 className="logo-text">Extensions</h1>
                 <button className="settings-btn">⚙️</button>
       </header> 
       
@@ -25,9 +24,11 @@ export default function App() {
       <main className="extensions-list">
         {/* Cada “tarjeta” es una extensión individual */}
         <div className="extension-card">
-          <h3 className="extension-title">
-          <img src={logoDevLens} alt="DevLens logo" className="devlens" /> DevLens</h3>
-          <p className="extension-desc">Quickly inspect page layouts and visualize element boundaries.</p>
+          <div className="img-logo"><img src={logoDevLens} alt="DevLens logo"/>
+            <div className="title-text">
+            <h3 className="extension-title"> DevLens</h3><p className="extension-desc">Quickly inspect page layouts and visualize element boundaries.</p>
+          </div>
+          </div>
           <div className="extension-actions">
             <button className="remove-btn">Remove</button>
             <label className="switch">
