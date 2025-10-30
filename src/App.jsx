@@ -1,34 +1,61 @@
-import React from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import "./style/index.css";
 
 const EXTENSIONS = [
   { id: "devlens", name: "DevLens", logo: "/logo-devlens.svg", enabled: true,
-    desc: "Quickly inspect page layouts and visualize element boundaries." },
-  { id: "stylespy", name: "StyleSpy", logo: "/logo-stylespy.svg", enabled: true,
-    desc: "Instantly analyze and copy CSS from any webpage element." },
-  { id: "darkreader", name: "Dark Reader", logo: "/logo-darkreader.svg", enabled: false,
-    desc: "Dark mode for every website, easily and consistently." },
-  { id: "gridmate", name: "GridMate", logo: "/logo-gridmate.svg", enabled: true,
-    desc: "Overlay responsive grids to refine your layouts." },
-  { id: "linkwatch", name: "LinkWatch", logo: "/logo-linkwatch.svg", enabled: false,
-    desc: "Track broken links and redirects while you browse." },
-  { id: "a11y", name: "A11y Aid", logo: "/logo-a11y.svg", enabled: true,
-    desc: "Quick accessibility checks: contrast, headings, landmarks." },
-  { id: "perfpeek", name: "PerfPeek", logo: "/logo-perfpeek.svg", enabled: true,
-    desc: "Measure paint, layout shifts and network waterfalls." },
-  { id: "imgopt", name: "ImgOpt", logo: "/logo-imgopt.svg", enabled: false,
-    desc: "Compress and convert images on the fly in-browser." },
-  { id: "colorscout", name: "ColorScout", logo: "/logo-colorscout.svg", enabled: true,
-    desc: "Pick colors, copy formats, and build palettes quickly." },
-  { id: "svgtidy", name: "SVGTidy", logo: "/logo-svgtidy.svg", enabled: true,
-    desc: "Clean, minify and inline SVGs with one click." },
-  { id: "favkit", name: "FavKit", logo: "/logo-favkit.svg", enabled: false,
-    desc: "Generate favicons and app icons from any image." },
-  { id: "notesnap", name: "NoteSnap", logo: "/logo-notesnap.svg", enabled: true,
-    desc: "Sticky notes per site with quick search and sync." },
+    desc: "Quickly inspect page layouts and visualize element boundaries."
+  },
+  { id: "JSONWizard", name: "JSONWizard", logo: "/logo-json-wizard.svg", enabled: false,
+    desc: "Formats, validates, and prettifies JSON responses in-browser."
+  },
+  { id: "MarkupNote", name: "Markup Notes", logo: "/logo-markup-notes.svg", enabled: true,
+    desc: "Enables annotation and notes directly onto webpages for collaborative debugging."
+  },
+  { id: "linkChecker", name: "Link Checker", logo: "/logo-link-checker.svg", enabled: false,
+    desc: "Scans and highlights broken links on any page."
+  },
+  { id: "stylespy", name: "StyleSpy", logo: "/logo-style-spy.svg", enabled: true,
+    desc: "Instantly analyze and copy CSS from any webpage element."
+  },
+  { id: "TabMaster Pro", name: "TabMaster Pro", logo: "/logo-tab-master-pro.svg", enabled: true,
+    desc: "Organizes browser tabs into groups and sessions."
+  },
+  { id: "GridGuides", name: "GridGuides", logo: "/logo-grid-guides.svg", enabled: true,
+    desc: "Overlay customizable grids and alignment guides on any webpage."
+  },
+  { id: "DOM Snapshot", name: "DOM Snapshot", logo: "/logo-dom-snapshot.svg", enabled: false,
+    desc: "Capture and export DOM structures quickly."
+  },
+  { id: "SpeedBoost", name: "SpeedBoost", logo: "/logo-speed-boost.svg", enabled: true,
+    desc: "Optimizes browser resource usage to accelerate page loading."
+  },
+  { id: "ViewsportBuddy", name: "ViewsportBuddy", logo: "/logo-viewport-buddy.svg", enabled: true,
+    desc: "Simulates various screen resolutions directly within the browser."
+  },
+  { id: "PalettePicker", name: "Palette Picker", logo: "/logo-palette-picker.svg", enabled: false,
+    desc: "Instantly extracts color palettes from any webpages."
+  },
+  { id: "ConsolePlus", name: "ConsolePlus", logo: "/logo-console-plus.svg", enabled: true,
+    desc: "Sticky notes per site with quick search and sync."
+  },
 ];
 
 export default function App() {
+  const [filter, setFilter] = useState("all");          // 'all' | 'active' | 'inactive'
+  const [items, setItems]   = useState(EXTENSIONS);     // estado vivo
+
+  const toggleEnabled = useCallback((id) => {
+    setItems(prev =>
+      prev.map(e => e.id === id ? { ...e, enabled: !e.enabled } : e)
+    );
+  }, []);
+
+  const filtered = useMemo(() => {
+    if (filter === "active")   return items.filter(e => e.enabled);
+    if (filter === "inactive") return items.filter(e => !e.enabled);
+    return items;
+  }, [filter, items]);
+
   return (
     <div className="app-container">
       <header className="header">
@@ -40,16 +67,28 @@ export default function App() {
       {/* Filtros */}
       <div className="toolbar">
         <h2>Extensions List</h2>
-        <div className="filters">
-          <button className="filter-active">All</button>
-          <button className="filter">Active</button>
-          <button className="filter">Inactive</button>
+        <div className="filters" role="tablist" aria-label="Filter extensions">
+          <button
+            className={filter === "all" ? "filter-active" : "filter"}
+            onClick={() => setFilter("all")}
+            role="tab" aria-selected={filter === "all"}
+          >All</button>
+          <button
+            className={filter === "active" ? "filter-active" : "filter"}
+            onClick={() => setFilter("active")}
+            role="tab" aria-selected={filter === "active"}
+          >Active</button>
+          <button
+            className={filter === "inactive" ? "filter-active" : "filter"}
+            onClick={() => setFilter("inactive")}
+            role="tab" aria-selected={filter === "inactive"}
+          >Inactive</button>
         </div>
       </div>
 
-      {/* Grid de tarjetas (un solo <main>) */}
+      {/* Grid de tarjetas */}
       <main className="extensions-grid">
-        {EXTENSIONS.map(ext => (
+        {filtered.map(ext => (
           <article className="extension-card" key={ext.id}>
             <div className="img-logo">
               <img src={ext.logo} alt={`${ext.name} logo`} loading="lazy" />
@@ -62,7 +101,11 @@ export default function App() {
             <div className="extension-actions">
               <button className="remove-btn">Remove</button>
               <label className="switch">
-                <input type="checkbox" defaultChecked={ext.enabled} />
+                <input
+                  type="checkbox"
+                  checked={ext.enabled}                 // CONTROLADO
+                  onChange={() => toggleEnabled(ext.id)} // TOGGLE STATE
+                />
                 <span className="slider"></span>
               </label>
             </div>
