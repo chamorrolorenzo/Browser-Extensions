@@ -41,13 +41,12 @@ const EXTENSIONS = [
 ];
 
 export default function App() {
-  const [filter, setFilter] = useState("all");          // 'all' | 'active' | 'inactive'
+  const [filter, setFilter] = useState("all");  // 'all' | 'active' | 'inactive'
   const [items, setItems]   = useState(EXTENSIONS);     // estado vivo
 
   const toggleEnabled = useCallback((id) => {
     setItems(prev =>
-      prev.map(e => e.id === id ? { ...e, enabled: !e.enabled } : e)
-    );
+      prev.map(e => e.id === id ? { ...e, enabled: !e.enabled } : e));
   }, []);
 
   const filtered = useMemo(() => {
@@ -61,7 +60,7 @@ export default function App() {
       <header className="header">
         <img src="/logo.svg" alt="App logo" className="logo" />
         <h1 className="logo-text">Extensions</h1>
-        <button className="settings-btn" aria-label="Settings">⚙️</button>
+        <button className="settings-btn" aria-label="Settings"><img src="/icon-sun.svg" alt="sun logo" className="sun"/></button>
       </header>
 
       {/* Filtros */}
