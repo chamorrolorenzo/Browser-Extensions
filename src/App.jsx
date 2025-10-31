@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useCallback } from "react";
 import "./style/index.css";
+import { useTheme } from "./context/ThemeContext.jsx"
 
 const EXTENSIONS = [
   { id: "devlens", name: "DevLens", logo: "/logo-devlens.svg", enabled: true,
@@ -44,6 +45,9 @@ export default function App() {
   const [filter, setFilter] = useState("all");  // 'all' | 'active' | 'inactive'
   const [items, setItems]   = useState(EXTENSIONS);     // estado vivo
 
+  //creamos la variable para acceder al Theme
+ const { theme, toggleTheme } = useTheme();
+
   const toggleEnabled = useCallback((id) => {
     setItems(prev =>
       prev.map(e => e.id === id ? { ...e, enabled: !e.enabled } : e));
@@ -60,7 +64,7 @@ export default function App() {
       <header className="header">
         <img src="/logo.svg" alt="App logo" className="logo" />
         <h1 className="logo-text">Extensions</h1>
-        <button className="settings-btn" aria-label="Settings"><img src="/icon-sun.svg" alt="sun logo" className="sun"/></button>
+        <button className="settings-btn" aria-label="Settings" onClick={toggleTheme}><img src={theme === "light" ? "/icon-sun.svg" : "/icon-moon.svg"} alt="theme icon" className="sun"/></button>
       </header>
 
       {/* Filtros */}

@@ -20,24 +20,22 @@
   --page-bg: linear-gradient(180deg,#040918,#091540);
  }
 
-/* ====== REGLAS GENERALES ====== */
+/* GENERALES */
 html, body {
   margin: 0;
   font-family: var(--font-sans);
   background: var(--page-bg) !important ;
   min-height: 100vh;
-  
   min-height: 100vh;
 }
 
-/* ====== CONTENEDOR PRINCIPAL ====== */
+/*CONTENEDOR PRINCIPAL*/
 .app-container {
   max-width: 1000px;
   margin: 0 auto;
   padding: 24px;
 }
 
-/* ===== HEADER ===== */
 .header {
   display: flex;
   align-items: center;
@@ -53,43 +51,36 @@ html, body {
 
 .logo-text{
   color: white;
-  font-weight: 600;
-  opacity: 0.9;
- margin-left: -80px;
+  margin-left: -82px;
   font-size: 20px;
  }
 
-/* botón de configuración */
 .settings-btn {
   margin-left: auto;
-  background: transparent;
   border-radius: 10px;
-  color: white;
   font-size: 1.1rem;
   cursor: pointer;
   opacity: 0.8;
   transition: opacity 0.2s;
   height: 40px;
-
 }
 
 .settings-btn:hover {
   opacity: 1;
 }
-/* ====== FILTROS ====== */
+
 .filters {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  
 }
+
 .toolbar{
   display:flex;
-  align-items:center;            /* verticalmente centrados en la MISMA línea */
-  justify-content:space-between; /* título a la izq, botones a la der */
+  align-items:center;   
+  justify-content:space-between; 
   gap:16px;
-  flex-wrap:wrap;                /* por si en móvil no entra */
-  
+  flex-wrap:wrap;                  
 }
 
 h2 {
@@ -102,7 +93,6 @@ h2 {
   border-radius: 999px;
   padding: 6px 16px;
   cursor: pointer;
-  font-weight: 600;
   transition: all 0.3s;
   color: var(--neutral-800);
 }
@@ -122,7 +112,7 @@ h2 {
   transition: all 0.3s;
 }
 
-/* ====== LISTA DE EXTENSIONES ====== */
+/*EXTENSIONS LIST*/
 .extensions-grid{
   display:grid;
   grid-auto-flow: column;           
@@ -132,21 +122,19 @@ h2 {
   padding:10px;
 }
 
-/* ====== TARJETA DE EXTENSIÓN ====== */
 .extension-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-   background: hsl(228, 18%, 16%)!important;
-   border: 1px solid var(--neutral-200);
+  background: hsl(228, 18%, 16%)!important;
+  border: 1px solid var(--neutral-200);
   border-radius: var(--radius-xl);
   padding: 16px;
   box-shadow: var(--shadow-md);
   height: 130px;
   width: 290px;
   margin-right: -3px;
-  
- }
+}
 
 .img-logo{
   display:flex;
@@ -160,7 +148,7 @@ h2 {
   height:60px;
  }
 
-/* Bloque de textos a la derecha del logo */
+/* textos a la derecha del logo */
 .title-text{
   display:flex;
   flex-direction:column;  
@@ -176,7 +164,7 @@ h2 {
   margin:8px 0 0;
   line-height:1.30; 
  }
-/* ====== ACCIONES (Remove + Switch) ====== */
+
 .extension-actions {
   display: flex;
   justify-content: space-between;
@@ -189,7 +177,6 @@ h2 {
   border: none;
   border-radius: 999px;
   padding: 5px 10px;
-  font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
 }
@@ -198,7 +185,6 @@ h2 {
   background: var(--red-700);
 }
 
-/* ====== SWITCH ON/OFF ====== */
 .switch {
   position: relative;
   display: inline-block;
@@ -238,7 +224,6 @@ input:checked + .slider:before {
   transform: translateX(15px);
 }
 
-
 /* Responsivo opcional */
 @media (max-width: 900px){
   .extensions-grid{
@@ -250,7 +235,11 @@ input:checked + .slider:before {
 @media (max-width: 480px){
   .extensions-grid{
     grid-template-columns: 1fr;
+     justify-items: center; 
   }
+   .toolbar { justify-content: center; text-align: center; }
+  h2 { width: 100%; text-align: center; margin: 8px 0; }
+  .filters { justify-content: center; }
 }
 
 /* ====== MODO OSCURO ====== */
@@ -274,4 +263,65 @@ input:checked + .slider:before {
   .slider {
     background-color: var(--neutral-600);
   }
+}
+
+/* Tema CLARO */
+:root[data-theme="light"] {
+  --page-bg: var(--gradient-light);
+  --text-color: #0f1226;
+  --header-bg: #ffffff;
+  --card-bg: #ffffff;
+  --surface-border: #e6e8ef; 
+  --control-border: var(--neutral-300);
+  --logo-text-color: #0f1226;
+}
+
+/* Tema OSCURO */
+:root[data-theme="dark"] {
+  --page-bg: var(--gradient-dark);
+  --text-color: var(--neutral-100);
+  --header-bg: hsl(226, 18%, 14%);
+  --card-bg: hsl(228, 18%, 16%);
+  --surface-border: var(--neutral-600);
+  --control-border: var(--neutral-600);
+  --logo-text-color: #ffffff;
+}
+
+/* Color de texto global según tema */
+html, body {
+  color: var(--text-color);
+}
+
+/* Sobrescribe el header */
+.header {
+  background: var(--header-bg) !important;
+}
+
+/* Texto del logo adaptable */
+.logo-text {
+  color: var(--logo-text-color);
+}
+
+.extension-card {
+  background: var(--card-bg) !important;
+  border-color: var(--surface-border);
+}
+
+/* bordes/colores por tema */
+.filter {
+  border-color: var(--control-border);
+  color: var(--text-color);
+  background: transparent;
+}
+.settings-btn {
+  color: var(--text-color);
+}
+
+/* Switch: pista con el mismo token de control */
+.slider {
+  background-color: var(--control-border);
+}
+
+:root[data-theme="light"] .logo-text {
+  display: none !important;
 }
